@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart City Solution</title>
+    <!-- Include Leaflet CSS and JavaScript -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #map {
+            width: 700px;
+            height: 500px;
+            margin: 0 auto;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            color: orange;
+        }
+        h2 {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1><strong>Welcome to my website!!!</strong></h1>
+    <h2>Smart City Solution</h2>
+    <p>Below is my smart city map! Click on the markers to see details about the infrastructures.</p>
+    
+    <!-- Map container -->
+    <div id="map"></div>
+    
+    <!-- Add your custom map with Leaflet -->
+    <script>
+        // Define map bounds and initialize the map
+        var bounds = [[40, -75], [35, -70]];
+        var map = L.map('map', {
+            crs: L.CRS.Simple,
+            maxBounds: bounds,
+            minZoom: -1,
+            maxZoom: 10,
+            zoom: 5,
+            center: [37.5, -72.5]
+        });
+
+        // Add custom image overlay as the map
+        var image = "comp project.png"; // Path to your map image
+        L.imageOverlay(image, bounds, { opacity: 0.8 }).addTo(map);
+
+        // Infrastructure details
+        var infrastructures = [
+            {
+                "name": "Trash to Electricity",
+                "location": [38.5, -74],
+                "details": "With this, we can solve our trash problem and produce a lot of electricity.",
+                "imagee": "trashtoe.png"
+            },
+            {
+                "name": "Desalination",
+                "location": [35.8, -74],
+                "details": "With this, we can turn seawater into drinking water, creating unlimited water resources.",
+                "imagee": "Desalination.png"
+            },
+            {
+                "name": "Maglev",
+                "location": [39.5, -71],
+                "details": "We can save resources with this type of railway.",
+                "imagee": "railroad.png"
+            },
+            {
+                "name": "Power Tree",
+                "location": [36, -71],
+                "details": "These trees receive signals from space and transform them to our devices.",
+                "imagee": "tree.png"
+            },
+            {
+                "name": "Power Path",
+                "location": [37.5, -72],
+                "details": "When people walk on it, it generates energy.",
+                "imagee": "powerpath.png"
+            },
+            {
+                "name": "Smart Apartment",
+                "location": [35.5, -70.5],
+                "details": "These apartments have solar panels and use water from desalination.",
+                "imagee": "apt.png"
+            }
+        ];
+
+        // Add markers with popups
+        infrastructures.forEach(function (infra) {
+            var popupContent = `
+                <div style="font-size: 14px;">
+                    <b>${infra.name}</b><br>
+                    <p>${infra.details}</p>
+                    <img src="${infra.imagee}" alt="${infra.name}" style="width: 250px; height: 250px;" />
+                </div>
+            `;
+            L.marker(infra.location)
+                .bindPopup(popupContent)
+                .addTo(map)
+                .bindTooltip(infra.name, { permanent: false });
+        });
+    </script>
+</body>
+</html>
